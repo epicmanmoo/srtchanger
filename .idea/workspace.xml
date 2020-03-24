@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4dc8c207-2a24-4c97-9fca-7ef10ad86f23" name="Default Changelist" comment="" />
+    <list default="true" id="4dc8c207-2a24-4c97-9fca-7ef10ad86f23" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +18,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/shift-srt-scripts" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ZXqnbMJ4V8T5IPpJpjceDjcxLb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -28,7 +31,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -84,6 +87,12 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/shift-srt-files" />
+      <path value="$PROJECT_DIR$/shift-srt-scripts" />
+    </ignored-roots>
+  </component>
   <component name="WindowStateProjectService">
     <state x="399" y="144" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585021973918">
       <screen x="0" y="0" width="1280" height="680" />
@@ -113,6 +122,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1259" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1585083688877" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1585084404406">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1585084404406" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1584997172529">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
