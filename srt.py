@@ -12,8 +12,6 @@ def is_int_string(s):
 
 def read_file():
     movie_content = []
-    second_last = None
-    last_line = None
     file_name = "hostel2.srt"
     ext_en = os.path.splitext(file_name)
     movie_content.append(ext_en[0])
@@ -190,6 +188,10 @@ def change_to(the_file, value):
                     ms_finish = '00' + str(ms_finish)
                 elif 100 > ms_finish > 10:
                     ms_finish = '0' + str(ms_finish)
+                if ms_start == 10:
+                    ms_start = '100'
+                if ms_finish == 10:
+                    ms_finish = '100'
                 hours_start = str(hours_start)
                 hours_finish = str(hours_finish)
                 if hours_start == "0.0" or hours_start == '0':
@@ -230,14 +232,10 @@ def change_file(content):
 def check_file():
     the_file = open("hostel2ch.srt", "r")
     content = the_file.readlines()
-    line_no = 0
     for line in content:
         if ":" in line and "," in line and "-->" in line:
             if len(line) != 30:
-                print("Line", line_no, "has a problem")
-            line_no += 1
-    else:
-        print("Fine")
+                print("ERROR:", line)
 
 
 before = read_file()
@@ -246,7 +244,7 @@ num_of_lines = before[len(before) - 1].strip()
 del before[0]
 del before[len(before) - 1]
 print(movie_name + ' with ' + num_of_lines + ' lines')
-in_value = "1.400"
+in_value = "13.900"
 after = change_to(before, in_value)
 try:
     change_file(after)
