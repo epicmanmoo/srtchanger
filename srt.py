@@ -62,56 +62,151 @@ def change_to(the_file, value):
                 sec_finish = int(s_ms_finish[0])
                 ms_finish = int(s_ms_finish[1])
                 f_value = float(value)
-                if f_value < 1:
+                if f_value < 1 and int(f_value) == 0:
                     spl_ms = value.split(".")
-                    ms_v = int(spl_ms[1])
+                    if "-" in spl_ms[0]:
+                        ms_v = int(spl_ms[1]) * -1
+                    else:
+                        ms_v = int(spl_ms[1])
+                    if ms_v > 999:
+                        return
                     ms_start += ms_v
                     ms_finish += ms_v
                     if ms_start > 999:
-                        sec_start += 1
                         ms_start = ms_start - 1000
+                        sec_start += 1
+                        if sec_start > 59:
+                            sec_start = 0
+                            min_start += 1
+                            if min_start > 59:
+                                min_start = 0
+                                hours_start = 1
                     if ms_finish > 999:
-                        sec_finish += 1
                         ms_finish = ms_finish - 1000
+                        sec_finish += 1
+                        if sec_finish > 59:
+                            sec_finish = 0
+                            min_finish += 1
+                            if min_finish > 59:
+                                min_finish = 0
+                                hours_finish = 1
+                    if ms_start < 0:
+                        ms_start = ms_start + 1000
+                        sec_start -= 1
+                        if sec_start < 0:
+                            sec_start = 59
+                            min_start -= 1
+                            if min_start < 0:
+                                min_finish = 59
+                                hours_finish = 0
+                    if ms_finish < 0:
+                        ms_finish = ms_finish + 1000
+                        sec_finish -= 1
+                        if sec_finish < 0:
+                            sec_finish = 59
+                            min_finish -= 1
+                            if min_finish < 0:
+                                min_finish = 59
+                                hours_finish = 0
                 else:
-                    pass
+                    spl_s = value.split(".")
+                    s_v = int(spl_s[0])
+                    ms_v = int(spl_s[1])
+                    if s_v < 0 or s_v > 59 or ms_v > 999 or ms_v < 0:
+                        return
+                    sec_start += s_v
+                    ms_start += ms_v
+                    sec_finish += s_v
+                    ms_finish += ms_v
+                    if sec_start > 59:
+                        sec_start = sec_start - 60
+                        min_start += 1
+                        if min_start > 59:
+                            min_start = 0
+                            hours_start += 1
+                    if sec_finish > 59:
+                        sec_finish = sec_finish - 60
+                        min_finish += 1
+                        if min_finish > 59:
+                            min_finish = 0
+                            hours_finish += 1
+                    if sec_start < 0:
+                        sec_start = sec_start + 60
+                        min_start -= 1
+                        if min_start < 0:
+                            min_start = 59
+                            hours_start -= 1
+                    if sec_finish < 0:
+                        sec_finish = sec_finish + 60
+                        min_finish -= 1
+                        if min_finish < 0:
+                            min_finish = 59
+                            hours_finish -= 1
+                    if ms_start > 999:
+                        ms_start = ms_start - 1000
+                        sec_start += 1
+                        if sec_start > 59:
+                            sec_start = 0
+                            min_start += 1
+                            if min_start > 59:
+                                min_start = 0
+                                hours_start = 1
+                    if ms_finish > 999:
+                        ms_finish = ms_finish - 1000
+                        sec_finish += 1
+                        if sec_finish > 59:
+                            sec_finish = 0
+                            min_finish += 1
+                            if min_finish > 59:
+                                min_finish = 0
+                                hours_finish = 1
+                    if ms_start < 0:
+                        ms_start = ms_start + 1000
+                        sec_start -= 1
+                        if sec_start < 0:
+                            sec_start = 59
+                            min_start -= 1
+                            if min_start < 0:
+                                min_finish = 59
+                                hours_finish = 0
+                    if ms_finish < 0:
+                        ms_finish = ms_finish + 1000
+                        sec_finish -= 1
+                        if sec_finish < 0:
+                            sec_finish = 59
+                            min_finish -= 1
+                            if min_finish < 0:
+                                min_finish = 59
+                                hours_finish = 0
+                if sec_start < 10:
+                    sec_start = '0' + str(sec_start)
+                if sec_finish < 10:
+                    sec_finish = '0' + str(sec_finish)
+                if ms_start < 10:
+                    ms_start = '00' + str(ms_start)
+                elif 100 > ms_start > 10:
+                    ms_start = '0' + str(ms_start)
+                if ms_finish < 10:
+                    ms_finish = '00' + str(ms_finish)
+                elif 100 > ms_finish > 10:
+                    ms_finish = '0' + str(ms_finish)
                 hours_start = str(hours_start)
                 hours_finish = str(hours_finish)
-                if hours_start == "0.0":
+                if hours_start == "0.0" or hours_start == '0':
                     hours_start = "00"
-                if hours_start == "1.0":
-                    hours_start = "01"
-                if hours_finish == "0.0":
+                if hours_finish == "0.0" or hours_finish == '0':
                     hours_finish = "00"
-                if hours_finish == "1.0":
+                if hours_start == "1.0" or hours_start == '1':
+                    hours_start = "01"
+                if hours_finish == "1.0" or hours_finish == '1':
                     hours_finish = "01"
                 if len(str(min_start)) == 1:
                     min_start = str('0' + str(min_start))
                 if len(str(min_finish)) == 1:
                     min_finish = str('0' + str(min_finish))
-                if len(str(sec_start)) > 2:
-                    sec_start = str(sec_start)
-                    sec_start = sec_start[0:2]
-                if len(str(sec_finish)) > 2:
-                    sec_finish = str(sec_finish)
-                    sec_finish = sec_finish[0:2]
-                if len(str(ms_start)) == 1:
-                    ms_start = str(ms_start) + "00"
-                if len(str(ms_start)) == 2:
-                    ms_start = str(ms_start) + "0"
-                if len(str(ms_finish)) == 1:
-                    ms_finish = str(ms_finish) + "00"
-                if len(str(ms_finish)) == 2:
-                    ms_finish = str(ms_finish) + "0"
-                if len(str(ms_start)) == 4:
-                    ms_start = str(ms_start)[0:2] + "0"
-                if len(str(ms_finish)) == 4:
-                    ms_finish = str(ms_finish)[0:2] + "0"
-                if len(str(ms_start)) == 5:
-                    ms_start = str(ms_start)[0:3]
-                if len(str(ms_finish)) == 5:
-                    ms_finish = str(ms_finish)[0:3]
-                this_row_start_str = hours_start + ":" + str(min_start) + ":" + str(sec_start) + "," + str(ms_start) + " --> " + hours_finish + ":" + str(min_finish) + ":" + str(sec_finish) + "," + str(ms_finish)
+                this_row_start_str = hours_start + ":" + str(min_start) + ":" + str(sec_start) + "," + str(
+                    ms_start) + " --> " + hours_finish + ":" + str(min_finish) + ":" + str(sec_finish) + "," + str(
+                    ms_finish)
                 changed_content.append(this_row_start_str)
             except IndexError:
                 continue
@@ -132,15 +227,29 @@ def change_file(content):
     new_file.close()
 
 
+def check_file():
+    the_file = open("hostel2ch.srt", "r")
+    content = the_file.readlines()
+    line_no = 0
+    for line in content:
+        if ":" in line and "," in line and "-->" in line:
+            if len(line) != 30:
+                print("Line", line_no, "has a problem")
+            line_no += 1
+    else:
+        print("Fine")
+
+
 before = read_file()
 movie_name = before[0].upper()
 num_of_lines = before[len(before) - 1].strip()
 del before[0]
 del before[len(before) - 1]
-# print(movie_name + ' with ' + num_of_lines + ' lines')
-after = change_to(before, "0.900")
+print(movie_name + ' with ' + num_of_lines + ' lines')
+in_value = "1.400"
+after = change_to(before, in_value)
 try:
     change_file(after)
 except Exception:
     pass
-
+check_file()
