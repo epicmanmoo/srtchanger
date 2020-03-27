@@ -1,7 +1,3 @@
-import decimal
-import os
-
-
 def is_int_string(s):
     try:
         int(s)
@@ -10,25 +6,25 @@ def is_int_string(s):
         return False
 
 
-def read_file():
+def read_file(file):
     movie_content = []
-    file_name = "hostel2.srt"
-    ext_en = os.path.splitext(file_name)
-    movie_content.append(ext_en[0])
-    ext_en = ext_en[1]
-    if ext_en != ".srt":
+    ext_en = file.split(".")
+    f_n = ext_en[0]
+    movie_content.append(f_n)
+    if ext_en[1] != "srt":
         print("Not a valid .srt file")
+        return
     else:
-        file = open("hostel2.srt", "r")
-        content = file.readlines()
-        second_last = file.readline()
-        last_line = file.readline()
+        m_file = open(file, "r")
+        content = m_file.readlines()
+        second_last = m_file.readline()
+        last_line = m_file.readline()
         for line in content:
             if (":" in line and "," in line and "-->" in line) or is_int_string(line):
                 movie_content.append(line)
                 second_last = last_line
                 last_line = line
-        file.close()
+        m_file.close()
         movie_content.append(second_last)
         return movie_content
 
@@ -206,18 +202,18 @@ def change_to(the_file, value):
                     min_start = str('0' + str(min_start))
                 if len(str(min_finish)) == 1:
                     min_finish = str('0' + str(min_finish))
-                this_row_start_str = hours_start + ":" + str(min_start) + ":" + str(sec_start) + "," + str(
-                    ms_start) + " --> " + hours_finish + ":" + str(min_finish) + ":" + str(sec_finish) + "," + str(
-                    ms_finish)
+                this_row_start_str = hours_start + ":" + str(min_start) + ":" + str(sec_start) + "," + \
+                    str(ms_start) + " --> " + hours_finish + ":" + str(min_finish) + ":" + str(sec_finish) + "," + \
+                    str(ms_finish)
                 changed_content.append(this_row_start_str)
             except IndexError:
                 continue
     return changed_content
 
 
-def change_file(content):
-    the_file = open("hostel2.srt", "r")
-    new_file = open("hostel2ch.srt", "w")
+def change_file(file, n_file, content):
+    the_file = open(file, "r")
+    new_file = open(n_file, "w")
     row_index = 0
     for line in the_file.readlines():
         if ":" in line and "," in line and "-->" in line:
@@ -229,8 +225,8 @@ def change_file(content):
     new_file.close()
 
 
-def check_file():
-    the_file = open("hostel2ch.srt", "r")
+def check_file(n_file):
+    the_file = open(n_file, "r")
     content = the_file.readlines()
     for line in content:
         if ":" in line and "," in line and "-->" in line:
@@ -238,16 +234,18 @@ def check_file():
                 print("ERROR:", line)
 
 
-before = read_file()
+file1 = "hostel2.srt"
+file2 = "hostel2ch.srt"
+before = read_file(file1)
 movie_name = before[0].upper()
 num_of_lines = before[len(before) - 1].strip()
 del before[0]
 del before[len(before) - 1]
 print(movie_name + ' with ' + num_of_lines + ' lines')
-in_value = "13.900"
+in_value = "6.000"
 after = change_to(before, in_value)
 try:
-    change_file(after)
+    change_file(file1, file2, after)
 except Exception:
     pass
-check_file()
+check_file(file2)
