@@ -1,3 +1,9 @@
+import datetime
+import time
+
+movie_dict = {}
+
+
 def is_int_string(s):
     try:
         int(s)
@@ -228,10 +234,16 @@ def change_file(file, n_file, content):
 def check_file(n_file):
     the_file = open(n_file, "r")
     content = the_file.readlines()
+    num_line = 0
     for line in content:
+        if is_int_string(line):
+            movie_dict[int(line)] = []
+            num_line = int(line)
         if ":" in line and "," in line and "-->" in line:
             if len(line) != 30:
                 print("ERROR:", line)
+        if not is_int_string(line):
+            movie_dict[num_line].append(line.strip())
 
 
 file1 = "hostel2.srt"
@@ -239,13 +251,37 @@ file2 = "hostel2ch.srt"
 before = read_file(file1)
 movie_name = before[0].upper()
 num_of_lines = before[len(before) - 1].strip()
-del before[0]
-del before[len(before) - 1]
 print(movie_name + ' with ' + num_of_lines + ' lines')
-in_value = "6.000"
+in_value = "0.123"
 after = change_to(before, in_value)
 try:
     change_file(file1, file2, after)
-except Exception:
+except Exception as e:
+    print(e)
     pass
 check_file(file2)
+
+prev_end = 0
+for dialog in movie_dict:
+    cur = movie_dict[dialog]
+    time_str = cur[0]
+    dial_str = ''
+    for dial in cur[1:]:
+        dial_str += dial + "\n"
+    f = '%H:%M:%S,%f'
+    t = time_str.split("-->")
+    start = t[0].strip()
+    end = t[1].strip()
+    if prev_end != 0:
+        st = datetime.datetime.strptime(prev_end, f)
+        et = datetime.datetime.strptime(start, f)
+        diff = et - st
+        time.sleep(diff.total_seconds())
+    prev_end = end
+    st = datetime.datetime.strptime(start, f)
+    et = datetime.datetime.strptime(end, f)
+    diff = et - st
+    print(dial_str)
+    time.sleep(diff.total_seconds())
+    print("\n" * 100)
+
